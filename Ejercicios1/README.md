@@ -1,18 +1,36 @@
-## Getting Started
+# Exercise set 1
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+### JAVA intermediate exercises using recursion, memory management, inheritance, etc.
 
-## Folder Structure
+- Given a Roman numeral, convert it to decimal.
 
-The workspace contains two folders by default, where:
+- Create a function that returns the days between two dates. The dates
+will be indicated by a string in the format "dd/MM/yyyy".
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+- Create a package that provides the methods to work with Shapes.
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+    - Create classes for Rectangle, Circle, Square and Triangle.
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+    - All classes have to have a method to return their area and perimeter
 
-## Dependency Management
+- Get the value for the nth Fibonacci value
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+    - Recursively
+
+    - With dynamic programming
+- Create a class that allows us to store different types of products in a supermarket.
+    - Each product has to have its price and name
+
+- Create a calculator that allows us to:
+
+    - Take one or two operands and perform the necessary operation.
+
+    - It is necessary to control divisions by zero and other possible problems.
+
+    - Implement addition/subtraction/division and multiplication operations.
+
+    - The operation has to be done through the "operate" method.
+- Add new functionalities to our calculator:
+
+    - Factorial and power operations without modifying the previous class.
+
