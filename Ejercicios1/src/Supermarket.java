@@ -11,10 +11,15 @@ public class Supermarket {
         stock.add(p);
     }
 
-    public void printStock(){
+    
+
+    @Override
+    public String toString(){
+        String result = "";
         for (Product p : stock) {
-            System.out.println(String.format("\tNombre: "+p.getName()+" \tPrecio: "+ p.getPrice() +" \tCantidad: " + p.getCuantity()));
+            result += "\tNombre: "+p.getName()+" \tPrecio: "+ p.getPrice() +" \tCantidad: " + p.getCuantity() + "\n";
         }
+        return result;
     }
 
     public LinkedList<Product> getStock() {
