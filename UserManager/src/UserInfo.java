@@ -1,15 +1,37 @@
+import java.util.ArrayDeque;
+
 public class UserInfo {
     private String userPassword;
     private String userName;
     private String userEmail;
-    private String securityQuestion = "¿Cuál es el nombre de tu primera mascota?";
+    private String securityQuestion;
     private String securityQuestionAnwer;
+    private boolean securityQuestionSetted = false;
+
+    private ArrayDeque<Message> mailbox;
 
 
     public UserInfo(String userName, String userPassword, String userEmail) {
         this.userPassword = userPassword;
         this.userName = userName;
         this.userEmail = userEmail;
+        mailbox = new ArrayDeque<Message>();
+    }
+
+    public void addMessage(Message m) {
+        mailbox.add(m);
+    }
+
+    public boolean isMailboxEmpty() {
+        return mailbox.isEmpty();
+    }
+
+    public Message readNextMessage() {
+        return mailbox.pollFirst();
+    }
+
+    public int getUnreadMessages() {
+        return mailbox.size();
     }
 
     public String getUserPassword() {
@@ -52,6 +74,20 @@ public class UserInfo {
     public void setSecurityQuestionAnwer(String securityQuestionAnwer) {
         this.securityQuestionAnwer = securityQuestionAnwer;
     }
+
+
+    public boolean isSecurityQuestionSetted() {
+        return this.securityQuestionSetted;
+    }
+
+    public boolean getSecurityQuestionSetted() {
+        return this.securityQuestionSetted;
+    }
+
+    public void setSecurityQuestionSetted(boolean securityQuestionSetted) {
+        this.securityQuestionSetted = securityQuestionSetted;
+    }
+
 
 
 }

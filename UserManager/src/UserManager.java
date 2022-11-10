@@ -1,6 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 
 public class UserManager {
     private Map<String, UserInfo> userDatabase = new HashMap<String, UserInfo>();
@@ -22,6 +22,19 @@ public class UserManager {
         saveUser(user);
     }
 
+    public void sendMessage(UserInfo sender, UserInfo receiver, String content) {
+        Message m = new Message(content, sender.getUserName());
+        receiver.addMessage(m);
+    }
+
+    public ArrayList<Message> getMessageList(UserInfo user){ 
+        ArrayList<Message> list = new ArrayList<Message>();
+        for (int i = 0; i < user.getUnreadMessages(); i++) {
+            list.add(user.readNextMessage());
+        }
+        return list;
+    }
+
     public void saveUser(UserInfo user) {
         userDatabase.put(user.getUserName(), user);
     }
@@ -34,16 +47,29 @@ public class UserManager {
         user.setUserEmail(newEmail);
     }
 
+    public ArrayList<String> getUserList(UserInfo user) {
+        ArrayList<String> result = new ArrayList<String>();
+
+        userDatabase.forEach((key, value) -> {
+            if (key != user.getUserName()) {
+                result.add(key);
+            }
+        });
+
+        return result;
+    }
+
     public void setSecurityQuestion(UserInfo user, String newSecurityQuestion, String newSecurityAnswer) {
         user.setSecurityQuestion(newSecurityQuestion);
         user.setSecurityQuestionAnwer(newSecurityAnswer);
     }
 
-    public UserInfo getUserInfo(String userName){
+    public UserInfo getUserInfo(String userName) {
         return userDatabase.get(userName);
     }
 
-    public boolean checkUserExits(String userName){
+    public boolean checkUserExits(String userName) {
         return (userDatabase.get(userName) != null);
     }
+
 }

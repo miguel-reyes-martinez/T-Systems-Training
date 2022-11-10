@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class App {
@@ -40,14 +41,23 @@ public class App {
                         UserInfo currentUser = passManager.getUserInfo(inputUser);
                         System.out.println("¡Loggeado!");
                         logged = true;
+
+                        if (!currentUser.getSecurityQuestionSetted()) {
+                            readNewSecurityQuestion(sc, currentUser);
+                        }
+
                         do {
                             System.out.println("\t( 1 ) Establecer pregunta de seguridad."); // Si no recuerdas la
                                                                                              // contraseña puedes
                                                                                              // reestrablecerla
                             System.out.println("\t( 2 ) Modificar email.");
                             System.out.println("\t( 3 ) Modificar contraseña.");
-                            System.out.println("\t( 4 ) Cerrar sesión.");
-                            System.out.print("Mi elección [1-4]:\t");
+                            System.out.println("\t( 4 ) Enviar mensaje.");
+                            if (!currentUser.isMailboxEmpty()) {
+                                System.out.println("\t( 5 ) Leer buzón - ["+currentUser.getUnreadMessages()+" Mensajes nuevos]");
+                            }
+                            System.out.println("\t( 6 ) Cerrar sesión.");
+                            System.out.print("Mi elección [1-6]:\t");
 
                             userChoice = Integer.parseInt(sc.nextLine());
 
@@ -71,8 +81,19 @@ public class App {
                                         readChangePassword(sc, currentUser);
                                     }
                                     break;
-
                                 case 4:
+                                    readSendMessage(sc, currentUser);
+                                    break;
+                                case 5:
+                                    ArrayList<Message> messageList = passManager.getMessageList(currentUser);
+                                    for (Message m : messageList) {
+                                        System.out.println("\tEnviado por: "+ m.getSender());
+                                        System.out.println("\t-------------------------------");
+                                        System.out.println(m.getContent());
+                                        System.out.println();
+                                    }
+                                    break;
+                                case 6:
                                     logged = false;
                                     break;
 
@@ -96,7 +117,7 @@ public class App {
                     }
 
                     break;
-                    case 3:
+                case 3:
                     try {
                         readResetPassword(sc);
                     } catch (Exception e) {
@@ -114,12 +135,34 @@ public class App {
         sc.close();
     }
 
-    public static void readResetPassword(Scanner sc) throws Exception{
-        
+    public static void readSendMessage(Scanner sc, UserInfo user) {
+
+        System.out.println("\nLista de usuarios: ");
+        ArrayList<String> userList = passManager.getUserList(user);
+        int i = 0;
+        for (String s : userList) {
+            System.out.println("[" + i + "] - " + s);
+            i++;
+        }
+        System.out.print("\nPor favor introduzca el nombre del destinatario: ");
+        String receiverName = sc.nextLine();
+        if (passManager.checkUserExits(receiverName)) {
+            UserInfo receiver = passManager.getUserInfo(receiverName);
+            System.out.print("\nMensaje: ");
+            String messageContent = sc.nextLine();
+            passManager.sendMessage(user, receiver, messageContent);
+            System.out.println("Mensaje enviado.");
+        } else {
+            System.out.println("El usuario introducido no existe.");
+        }
+    }
+
+    public static void readResetPassword(Scanner sc) throws Exception {
+
         System.out.print("\nPor favor introduzca el nombre de usuario: ");
         String user = sc.nextLine();
         if (passManager.checkUserExits(user)) {
-            
+
             System.out.print("\nResponda a la siguinte pregunta de seguridad: ");
             System.out.println(passManager.getUserInfo(user).getSecurityQuestion());
             String answer = passManager.getUserInfo(user).getSecurityQuestionAnwer();
@@ -135,11 +178,11 @@ public class App {
                     System.out.println("[ERROR] " + e.getMessage());
                     readChangePassword(sc, userInfo);
                 }
-                
+
             } else {
                 System.out.println("Respuesta incorrecta.");
             }
-        }else{
+        } else {
             System.out.println("El usuario introducido no existe.");
         }
     }
@@ -162,8 +205,8 @@ public class App {
 
     public static void readNewSecurityQuestion(Scanner sc, UserInfo user) {
 
-        for (int i = 0; i < Questions.pool.length ; i++) {
-            System.out.println("["+i+"] "+Questions.pool[i]);
+        for (int i = 0; i < Questions.pool.length; i++) {
+            System.out.println("[" + i + "] " + Questions.pool[i]);
         }
         System.out.print("\nPor favor elija una pregunta de seguridad: ");
         int chosenQuestion = Integer.parseInt(sc.nextLine());
@@ -173,6 +216,8 @@ public class App {
 
         passManager.setSecurityQuestion(user, Questions.pool[chosenQuestion], chosenAnswer);
         System.out.println("\nPregunta de seguridad actualizada.");
+
+        user.setSecurityQuestionSetted(true);
     }
 
     public static void readNewUser(Scanner sc) throws Exception {
