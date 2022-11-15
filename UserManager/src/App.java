@@ -8,10 +8,15 @@ public class App {
 
         boolean exit = false;
         boolean logged = false;
-
+        PokemonGo mipartida = new PokemonGo();
         String userName = "admin";
         String password = "password";
         String email = "admin@t-systems.com";
+        passManager.signUp(userName, password, email);
+
+         userName = "m";
+         password = "m";
+         email = "m@t-systems.com";
         passManager.signUp(userName, password, email);
 
         Scanner sc = new Scanner(System.in);
@@ -56,7 +61,8 @@ public class App {
                             if (!currentUser.isMailboxEmpty()) {
                                 System.out.println("\t( 5 ) Leer buzón - ["+currentUser.getUnreadMessages()+" Mensajes nuevos]");
                             }
-                            System.out.println("\t( 6 ) Cerrar sesión.");
+                            System.out.println("\t( 6 ) Jugar a Pokémon GO.");
+                            System.out.println("\t( 7 ) Cerrar sesión.");
                             System.out.print("Mi elección [1-6]:\t");
 
                             userChoice = Integer.parseInt(sc.nextLine());
@@ -93,7 +99,11 @@ public class App {
                                         System.out.println();
                                     }
                                     break;
-                                case 6:
+                                    case 6:
+                                    
+                                    mipartida.play(sc, currentUser, passManager.getUserList(currentUser));
+                                    break;
+                                case 7:
                                     logged = false;
                                     break;
 
@@ -138,10 +148,10 @@ public class App {
     public static void readSendMessage(Scanner sc, UserInfo user) {
 
         System.out.println("\nLista de usuarios: ");
-        ArrayList<String> userList = passManager.getUserList(user);
+        ArrayList<UserInfo> userList = passManager.getUserList(user);
         int i = 0;
-        for (String s : userList) {
-            System.out.println("[" + i + "] - " + s);
+        for (UserInfo s : userList) {
+            System.out.println("[" + i + "] - " + s.getUserName());
             i++;
         }
         System.out.print("\nPor favor introduzca el nombre del destinatario: ");

@@ -47,12 +47,12 @@ public class UserManager {
         user.setUserEmail(newEmail);
     }
 
-    public ArrayList<String> getUserList(UserInfo user) {
-        ArrayList<String> result = new ArrayList<String>();
+    public ArrayList<UserInfo> getUserList(UserInfo user) {
+        ArrayList<UserInfo> result = new ArrayList<UserInfo>();
 
         userDatabase.forEach((key, value) -> {
             if (key != user.getUserName()) {
-                result.add(key);
+                result.add(value);
             }
         });
 

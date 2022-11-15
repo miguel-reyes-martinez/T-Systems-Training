@@ -11,7 +11,7 @@ public class App {
 
         //Mi pokemon inicial
         myTeam.add(new Pokemon(new Species(Generation1.BULBASAUR), 14));
-
+        Pokemon pika = new Pokemon(new Species(Generation1.BULBASAUR), 14);
         //Lista de pokemons enemigos
         enemyPokemons.add(new Pokemon(new Species(Generation1.SQUIRTLE), 12));
         enemyPokemons.add(new Pokemon(new Species(Generation1.CHARMANDER), 14));
@@ -38,19 +38,20 @@ public class App {
                     break;
 
                 case 2:
-                int i = 0;
-                for (Pokemon p : myTeam) {
-                    System.out.print("("+i+") "+p.getName()+"\t");
-                    i++;
-                }
-                System.out.print("\nElige a un pokemon [0-"+(i-1)+"]:\t");
-                Scanner scPokemon = new Scanner(System.in);
-                int chosenPokemon = scPokemon.nextInt();
-                if (chosenPokemon < i) {
-                    myTeam.get(chosenPokemon).train();
-                    myTeam.get(chosenPokemon).levelUp();  
-                }
-                    
+                // int i = 0;
+                // for (Pokemon p : myTeam) {
+                //     System.out.print("("+i+") "+p.getName()+"\t");
+                //     i++;
+                // }
+                // System.out.print("\nElige a un pokemon [0-"+(i-1)+"]:\t");
+                // Scanner scPokemon = new Scanner(System.in);
+                // int chosenPokemon = Integer.parseInt(scPokemon.nextLine()) ;
+                // if (chosenPokemon < i) {
+                //     myTeam.get(chosenPokemon).train();
+                //     myTeam.get(chosenPokemon).levelUp();  
+                // }
+                pika.train();
+                pika.levelUp();
                     break;
                 case 3:
                     int pickedPokemon = (int)(Math.random() * enemyPokemons.size());

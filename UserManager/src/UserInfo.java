@@ -1,4 +1,8 @@
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+
 
 public class UserInfo {
     private String userPassword;
@@ -10,13 +14,32 @@ public class UserInfo {
 
     private ArrayDeque<Message> mailbox;
 
+    //Pokemon
+    ArrayList<Pokemon> listaUsuario = new ArrayList();
+
+
 
     public UserInfo(String userName, String userPassword, String userEmail) {
         this.userPassword = userPassword;
         this.userName = userName;
         this.userEmail = userEmail;
         mailbox = new ArrayDeque<Message>();
+
+        for (int i = 0; i < 6; i++) {
+            listaUsuario.add(PokemonGo.getRandomPokemon());
+        }
+        
+        
     }
+
+    public void removePokemon(Pokemon enemigo) {
+        listaUsuario.remove(enemigo);
+    }
+
+    public ArrayList<Pokemon> getListaUsuario() {
+        return this.listaUsuario;
+    }
+
 
     public void addMessage(Message m) {
         mailbox.add(m);
@@ -87,6 +110,9 @@ public class UserInfo {
     public void setSecurityQuestionSetted(boolean securityQuestionSetted) {
         this.securityQuestionSetted = securityQuestionSetted;
     }
+
+
+    
 
 
 
