@@ -19,4 +19,6 @@ The aim of the exercise is to simulate the logic of Pokemon video games, allowin
 Simple exercise that simulates the operation of a vending machine and throws exceptions if the input is not correct.
 
 ### User Manager
-User management application, which allows storing user information, setting a security question to reset the password and sending messages between users.
+User management application, which allows storing user information, setting a security question to reset the password and sending messages between users. 
+
+Update: You can now play PokemonGO once the user has logged in.
